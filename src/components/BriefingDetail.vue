@@ -28,7 +28,6 @@ export default class BriefingDetail extends Vue {
 
   created(): void {
     this.fetchBriefing();
-
     this.userSub();
   }
 
@@ -38,7 +37,8 @@ export default class BriefingDetail extends Vue {
     });
   }
 
-  // fetching data async, non - reactive
+  // fetching data async, in a non - reactive way
+  // this is totally fine to handle local state
   async fetchBriefing(): Promise<void> {
     this.error = "";
     try {
