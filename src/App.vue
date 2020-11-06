@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/two">Two</router-link>
-      <router-link :to="{ name: 'BriefingDetail', params: { briefingId: 1 } }"
-        >User</router-link
-      >
+      <router-link to="/">Briefing List</router-link>
     </div>
     <router-view />
   </div>

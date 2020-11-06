@@ -16,16 +16,12 @@
 import { Subscription } from "rxjs";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { BriefingEntity } from "../domain/briefing/briefing.entity";
+import { briefingsServiceReactive } from "../domain/briefing/briefings-service-reactive";
 
 import {
   reactiveServiceFactory,
   BriefingsServiceReactive,
 } from "@/repository/reactive-service-factory";
-import { ReactiveService } from "@/repository/reactive-service";
-
-const briefingsService: BriefingsServiceReactive = reactiveServiceFactory.get(
-  "briefings"
-);
 
 @Component
 export default class BriefingList extends Vue {
@@ -34,25 +30,16 @@ export default class BriefingList extends Vue {
   private briefingListHandle: Subscription = {} as Subscription;
 
   created(): void {
-    this.fetchAllBriefingsReactive();
+    this.briefingsSubscribe();
+    briefingsServiceReactive.fetchBriefings();
   }
 
-  fetchAllBriefingsReactive() {
-    this.briefingListHandle = briefingsService.state$.subscribe(
+  briefingsSubscribe(): void {
+    this.briefingListHandle = briefingsServiceReactive.state$.subscribe(
       (briefingList) => {
-        console.log("Briefing One got briefings", briefingList);
         this.briefingList = briefingList;
       }
     );
-
-    briefingsService.fetchBriefings();
-  }
-
-  fetchAllBriefings(): void {
-    this.briefingList = [];
-    briefingsService.getBriefings().then(() => {
-      this.briefingList = briefingsService.getBriefingList();
-    });
   }
 
   beforeDestroy() {

@@ -13,6 +13,8 @@ import { BriefingEntity } from "../briefing/briefing.entity";
 import { reactiveServiceFactory } from "@/repository/reactive-service-factory";
 import { ReactiveService } from "@/repository/reactive-service";
 import { UserEntity } from "@/domain/user/user.entity";
+import { BriefingsRepository } from "@/domain/briefing/briefings-repository";
+const briefingsRepository = new BriefingsRepository();
 
 const userService: ReactiveService<UserEntity> = reactiveServiceFactory.get(
   "user"
@@ -36,10 +38,12 @@ export default class BriefingDetail extends Vue {
     });
   }
 
+  // fetching data async, non - reactive
   async fetchBriefing(): Promise<void> {
     this.error = "";
     try {
-      this.briefing = await briefingsService.getBriefingById(this.briefingId);
+      const result = await briefingsRepository.getBriefingById(this.briefingId);
+      this.briefing = result.data;
     } catch (error) {
       this.error = "An error occured" + error.message;
     }
