@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import BriefingList from '../components/BriefingList.vue';
-import BriefingDetail from '../components/BriefingDetail.vue';
-import BriefingListTwo from '../components/BriefingListTwo.vue';
+import BriefingList from '../components/BriefingList';
+import BriefingDetail from '../components/BriefingDetail';
 
 Vue.use(VueRouter)
 
@@ -13,15 +12,10 @@ const routes: Array<RouteConfig> = [
     component: BriefingList
   },
   {
-    path: '/two',
-    name: 'BriefingListTwo',
-    component: BriefingListTwo
-  },
-  {
     path: '/briefing/:briefingId',
     name: 'BriefingDetail',
     component: BriefingDetail,
-    props(route) {
+    props(route:) {
       return {
         briefingId: parseInt(route.params.briefingId as string)
       }
