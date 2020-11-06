@@ -1,7 +1,7 @@
 import { ReactiveStore } from './reactive-store';
 
 export class ReactiveService<T> {
-    private _store: ReactiveStore<T>;
+    protected _store: ReactiveStore<T>;
 
     constructor() {
         this._store = new ReactiveStore<T>();

@@ -9,11 +9,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { BriefingEntity } from "../briefing/briefing.entity";
-import { briefingsService } from "../services/briefings-service.module";
 
-import { repositoryFactory } from "../repository-factory";
-import { UserRepository } from "../user-repository";
-const userRepo: UserRepository = repositoryFactory.getRepository("user");
+import { reactiveServiceFactory } from "@/repository/reactive-service-factory";
+import { ReactiveService } from "@/repository/reactive-service";
+import { UserEntity } from "@/domain/user/user.entity";
+
+const userService: ReactiveService<UserEntity> = reactiveServiceFactory.get(
+  "user"
+);
 
 @Component
 export default class BriefingDetail extends Vue {
@@ -28,7 +31,7 @@ export default class BriefingDetail extends Vue {
   }
 
   userSub() {
-    userRepo.state$.subscribe((user) => {
+    userService.state$.subscribe((user) => {
       console.log("got user data", user);
     });
   }

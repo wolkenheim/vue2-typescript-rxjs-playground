@@ -1,4 +1,4 @@
-import { BriefingEntity } from '@/briefing/briefing.entity';
+import { BriefingEntity } from './briefing.entity';
 import axios from 'axios';
 
 export class BriefingsRepository {

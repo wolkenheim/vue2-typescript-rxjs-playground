@@ -1,28 +1,25 @@
 
+import { ReactiveService } from '@/repository/reactive-service';
 import { BriefingEntity } from "../briefing/briefing.entity";
+import { BriefingsRepository } from './briefings-repository';
+const briefingsRepository = new BriefingsRepository();
 
+class BriefingsServiceReactive extends ReactiveService<BriefingEntity[]>{
 
-
-export class BriefingsServiceReactive {
-
-
-    async getBriefings(): Promise<void> {
+    async fetchBriefings(): Promise<void> {
         try {
-            const result = await this.briefingsRepository.getBriefings();
+            const result = await briefingsRepository.getBriefings();
 
             if (result.data.length > 0) {
-                this._briefingsStore.setState(result.data);
+                this.state = result.data;
 
             }
         } catch (error) {
             console.log(error);
         }
-
-    }
-
-
-    async getBriefingById(id: number): Promise<BriefingEntity> {
-        const result = await this.briefingsRepository.getBriefingById(id);
-        return result.data;
     }
 }
+
+const briefingsServiceReactive = new BriefingsServiceReactive();
+
+export { briefingsServiceReactive, BriefingsServiceReactive }

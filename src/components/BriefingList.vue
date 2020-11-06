@@ -15,12 +15,17 @@
 <script lang="ts">
 import { Subscription } from "rxjs";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { BriefingEntity } from "../domain/briefing/briefing.entity";
 
-import { BriefingEntity } from "../briefing/briefing.entity";
 import {
-  briefingsService,
-  briefingsServiceReactive,
-} from "../services/briefings-service.module";
+  reactiveServiceFactory,
+  BriefingsServiceReactive,
+} from "@/repository/reactive-service-factory";
+import { ReactiveService } from "@/repository/reactive-service";
+
+const briefingsService: BriefingsServiceReactive = reactiveServiceFactory.get(
+  "briefings"
+);
 
 @Component
 export default class BriefingList extends Vue {
@@ -33,14 +38,14 @@ export default class BriefingList extends Vue {
   }
 
   fetchAllBriefingsReactive() {
-    this.briefingListHandle = briefingsServiceReactive.state$.subscribe(
+    this.briefingListHandle = briefingsService.state$.subscribe(
       (briefingList) => {
         console.log("Briefing One got briefings", briefingList);
         this.briefingList = briefingList;
       }
     );
 
-    //briefingsServiceReactive.getBriefings();
+    briefingsService.fetchBriefings();
   }
 
   fetchAllBriefings(): void {
