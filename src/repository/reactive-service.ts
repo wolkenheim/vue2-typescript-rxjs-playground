@@ -1,6 +1,6 @@
-import { ReactiveStore } from './services/reactive-store';
+import { ReactiveStore } from './reactive-store';
 
-export class Repository<T> {
+export class ReactiveService<T> {
     private _store: ReactiveStore<T>;
 
     constructor() {
